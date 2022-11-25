@@ -1,0 +1,382 @@
+openapi: 3.0.3
+info:
+  title: Notification bidding viewer API
+  description: Notification bidding viewer API
+  version: 1.0.0
+servers:
+  - url: 'https://127.0.0.1:8087'
+paths:
+  /api/real-estate/list:
+    get:
+      summary: Возвращает список доступных объектов недвижимости, при указании кадастровго номера, возвращает объекты недвижимости с переданным кадастровым номером
+      operationId: getRealEstateList
+      parameters:
+        - in: query
+          description: Ограничение на количество объектов в ответе
+          name: limit
+          required: true
+          schema:
+            type: integer
+        - in: query
+          description: Курсор, для получения следующей части ответа
+          name: cursor
+          required: false
+          schema:
+            type: string
+        - in: query
+          description: Кадастровый номер, для поиска объектов недвижимости
+          name: cadastralNumber
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealEstateResponseDTO'
+        '400':
+          description: Ошибка в передаваемых параметрах
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+  /api/real-estate/list/cadastral-numbers:
+    post:
+      summary: Возвращает список объектов недвижимости по списку кадастровых номеров
+      operationId: getRealEstateListByCadastralNumbers
+      parameters:
+        - in: query
+          description: Ограничение на количество объектов в ответе
+          name: limit
+          required: true
+          schema:
+            type: integer
+        - in: query
+          description: Курсор, для получения следующей части ответа
+          name: cursor
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CadastralNumberDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealEstateResponseDTO'
+        '400':
+          description: Ошибка в передаваемых параметрах
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+
+  /api/real-estate/list/city:
+    get:
+      summary: Возвращает список объектов недвижимости по городу и региону
+      operationId: getRealEstateListByCity
+      parameters:
+        - in: query
+          description: Ограничение на количество объектов в ответе
+          name: limit
+          required: true
+          schema:
+            type: integer
+        - in: query
+          description: Курсор, для получения следующей части ответа
+          name: cursor
+          required: false
+          schema:
+            type: string
+        - in: query
+          description: Название региона
+          name: region
+          required: true
+          schema:
+            type: string
+        - in: query
+          description: Название города
+          name: city
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealEstateResponseDTO'
+        '400':
+          description: Ошибка в передаваемом id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+  /api/real-estate/list/region:
+    get:
+      summary: Возвращает список объектов недвижимости по региону
+      operationId: getRealEstateListByRegion
+      parameters:
+        - in: query
+          description: Ограничение на количество объектов в ответе
+          name: limit
+          required: true
+          schema:
+            type: integer
+        - in: query
+          description: Курсор, для получения следующей части ответа
+          name: cursor
+          required: false
+          schema:
+            type: string
+        - in: query
+          description: Название региона
+          name: region
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealEstateResponseDTO'
+        '400':
+          description: Ошибка в передаваемом id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+
+  /api/real-estate/{realEstateId}:
+    get:
+      summary: Возвращает объект недвижимости по id
+      operationId: getRealEstateById
+      parameters:
+        - in: path
+          description: Идентификатор объекта недвижимости
+          name: realEstateId
+          required: true
+          schema:
+            $ref: '#/components/schemas/RealEstateId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RealEstateDTO'
+        '400':
+          description: Ошибка в передаваемом id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+  /api/real-estate/quantity/cadastral-number:
+    get:
+      summary: Возвращает число объектов с запрашиваемым кадастроым номером
+      operationId: getRealEstateQuantityByCadastralNumber
+      parameters:
+        - in: query
+          description: Кадастроый номер
+          name: cadastralNumber
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuantityRealEstateCadastralNumberDTO"
+        '400':
+          description: Ошибка в передаваемых параметрах
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+  /api/real-estate/quantity/region:
+    get:
+      summary: Возвращает число объектов по региону
+      operationId: getRealEstateQuantityByRegion
+      parameters:
+        - in: query
+          description: Регион
+          name: region
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuantityRealEstateRegionDTO"
+        '400':
+          description: Ошибка в передаваемых параметрах
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+  /api/real-estate/quantity/city:
+    get:
+      summary: Возвращает число объектов по городу
+      operationId: getRealEstateQuantityByCity
+      parameters:
+        - in: query
+          description: Регион
+          name: region
+          required: true
+          schema:
+            type: string
+        - in: query
+          description: Город
+          name: city
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuantityRealEstateCityDTO"
+        '400':
+          description: Ошибка в передаваемых параметрах
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DefaultErrorResponse"
+
+
+components:
+  schemas:
+    RealEstateResponseDTO:
+      type: object
+      required:
+        - cursor
+        - items
+      properties:
+        cursor:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RealEstateDTO'
+
+    RealEstateDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        cadastralNumber:
+          type: string
+        link:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressDTO'
+        minPrice:
+          type: string
+        realEstateType:
+          type: string
+        publishDate:
+          type: string
+          format: date
+        biddingStartTime:
+          type: string
+          format: date
+        biddingEndTime:
+          type: string
+          format: date
+        auctionStartDate:
+          type: string
+          format: date
+
+    AddressDTO:
+      type: object
+      properties:
+        region:
+          type: string
+        district:
+          type: string
+        city:
+          type: string
+        microdistrict:
+          type: string
+        street:
+          type: string
+        building:
+          type: string
+        apatrment:
+          type: string
+        room:
+          type: string
+        housing:
+          type: string
+
+    CadastralNumberDTO:
+      type: object
+      properties:
+        cadastralNumbers:
+          type: array
+          items:
+            type: string
+
+    RealEstateId:
+      type: string
+
+    QuantityRealEstateCadastralNumberDTO:
+      type: object
+      properties:
+        cadastralNumber:
+          type: string
+        quantity:
+          type: integer
+
+    QuantityRealEstateRegionDTO:
+      type: object
+      properties:
+        region:
+          type: string
+        quantity:
+          type: integer
+
+    QuantityRealEstateCityDTO:
+      type: object
+      properties:
+        region:
+          type: string
+        city:
+          type: string
+        quantity:
+          type: integer
+
+    DefaultErrorResponse:
+      type: object
+      required:
+        - message
+        - timestamp
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: object

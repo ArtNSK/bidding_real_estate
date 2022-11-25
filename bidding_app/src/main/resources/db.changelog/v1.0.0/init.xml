@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="user6678 (generated)" id="1669270819032-1">
+        <createSequence cacheSize="1" cycle="false" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="address_idaddress_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-2">
+        <createSequence cacheSize="1" cycle="false" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="real_estate_idreal_estate_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-3">
+        <createTable tableName="address">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="address_pkey"/>
+            </column>
+            <column name="apatrment" type="VARCHAR(255)"/>
+            <column name="building" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="district" type="VARCHAR(255)"/>
+            <column name="housing" type="VARCHAR(255)"/>
+            <column name="microdistrict" type="VARCHAR(255)"/>
+            <column name="region" type="VARCHAR(255)"/>
+            <column name="room" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-4">
+        <createTable tableName="real_estate">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="real_estate_pkey"/>
+            </column>
+            <column name="address" type="TEXT"/>
+            <column name="auction_start_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="bidding_end_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="bidding_start_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="cadastral_number" type="VARCHAR(255)"/>
+            <column name="link" type="VARCHAR(255)"/>
+            <column name="lot_name" type="TEXT"/>
+            <column name="lot_number" type="INTEGER"/>
+            <column name="min_price" type="VARCHAR(255)"/>
+            <column name="publish_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="real_estate_type" type="VARCHAR(255)"/>
+            <column name="address_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-5">
+        <loadData encoding="UTF-8" file="db.changelog/v1.0.0/data/address.csv" quotchar="&quot;" separator="," tableName="address">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="apatrment" name="apatrment" type="STRING"/>
+            <column header="building" name="building" type="STRING"/>
+            <column header="city" name="city" type="STRING"/>
+            <column header="district" name="district" type="STRING"/>
+            <column header="housing" name="housing" type="STRING"/>
+            <column header="microdistrict" name="microdistrict" type="STRING"/>
+            <column header="region" name="region" type="STRING"/>
+            <column header="room" name="room" type="STRING"/>
+            <column header="street" name="street" type="STRING"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-6">
+        <loadData encoding="UTF-8" file="db.changelog/v1.0.0/data/real_estate.csv" quotchar="&quot;" separator="," tableName="real_estate">
+            <column header="id" name="id" type="NUMERIC"/>
+            <column header="address" name="address" type="STRING"/>
+            <column header="auction_start_date" name="auction_start_date" type="DATE"/>
+            <column header="bidding_end_time" name="bidding_end_time" type="DATE"/>
+            <column header="bidding_start_time" name="bidding_start_time" type="DATE"/>
+            <column header="cadastral_number" name="cadastral_number" type="STRING"/>
+            <column header="link" name="link" type="STRING"/>
+            <column header="lot_name" name="lot_name" type="STRING"/>
+            <column header="lot_number" name="lot_number" type="NUMERIC"/>
+            <column header="min_price" name="min_price" type="STRING"/>
+            <column header="publish_date" name="publish_date" type="DATE"/>
+            <column header="real_estate_type" name="real_estate_type" type="STRING"/>
+            <column header="address_id" name="address_id" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="user6678 (generated)" id="1669270819032-7">
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="real_estate" constraintName="fkcwb8g3j343oj14dcgmb2afs6s" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="address"/>
+    </changeSet>
+</databaseChangeLog>
