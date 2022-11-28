@@ -1,9 +1,9 @@
-#bidding_real_estate
+ # bidding_real_estate
 
 Приложение предоставляет информацию о торгах недвижимостью (torgi.gov.ru)
 через telegram-бота.
 
-Ссылка на бот: https://t.me/BiddingRealEstateBot
+[Ссылка на бот](https://t.me/BiddingRealEstateBot)
 (работает в тестовом режиме)
 
 Приложение состоит из:
